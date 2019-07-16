@@ -1,8 +1,6 @@
 import React from 'react';
-import { DatePicker, Switch, Select, Checkbox,Button } from 'antd';
+import { DatePicker, Switch, Select,Button } from 'antd';
 import './App.css';
-import { enabled } from 'ansi-colors';
-
 const { RangePicker } = DatePicker;
 const { Option } = Select;
 
@@ -10,31 +8,29 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      switchValue:false,
+      switchValue: false,
       dateValue:null,
       selectedValue:[],
-      checkboxValue:null,
       defaultValue: [],
+      checkboxValue:null,
       lengthDefault:0,
       enableSubmit:true
      };
   }
 onSelectedDate = (date, dateString)=> {
-  console.log("Date String",dateString);
   this.setState({
     dateValue: dateString,
     enableSubmit: this.state.lengthDefault > 0 && dateString[0]!=""  ? false : true
   })
 }
 onChangeSwitch =(checked)=> {
-  console.log("Switch",checked);
   if(checked == false){
     this.setState({
       switchValue: false,
       defaultValue: [],
       selectedValue: [],
       lengthDefault: 0,
-      enableSubmit: false,
+      enableSubmit: this.state.selectedValue.length == 5 ? true : false,
     }) 
   }else{
     this.setState({
@@ -57,10 +53,8 @@ onSelected=(value)=> {
     let valueSelected = [];
     if (this.state.switchValue == true && this.state.lengthDefault == 5){
       valueSelected = this.state.defaultValue;
-      console.log("defaultValue", valueSelected);
     }else{
       valueSelected = this.state.selectedValue;
-      console.log("selectedValue", valueSelected);
     }
    
     return (
